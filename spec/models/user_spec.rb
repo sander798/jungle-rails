@@ -50,5 +50,18 @@ RSpec.describe User, type: :model do
       expect {@user.save!}.to raise_error(ActiveRecord::RecordInvalid)
     end
 
+    it "Requires names to be unique" do
+      @user.name = "newUser"
+      @user.password = "pass123"
+      @user.password_confirmation = "pass123"
+      @user.save
+
+      user2 = User.new()
+      user2.name = "newUser"
+      user2.password = "123password"
+      user2.password_confirmation = "123password"
+      expect {user2.save!}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
   end
 end
