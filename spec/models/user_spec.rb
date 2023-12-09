@@ -82,5 +82,13 @@ RSpec.describe User, type: :model do
     it "Returns nil when given incorrect password" do
       expect(User.authenticate_with_credentials("user1", "pass123asd")).to eql(nil)
     end
+
+    it "Athenticates with different letter cases in name from original" do
+      expect(User.authenticate_with_credentials("USEr1", "pass123")).to_not eql(nil)
+    end
+
+    it "Athenticates with extra spaces around name" do
+      expect(User.authenticate_with_credentials("  user1   ", "pass123")).to_not eql(nil)
+    end
   end
 end
