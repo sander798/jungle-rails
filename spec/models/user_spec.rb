@@ -64,4 +64,23 @@ RSpec.describe User, type: :model do
     end
 
   end
+
+  describe '.authenticate_with_credentials' do
+
+    before do
+      User.create(name: "user1", password: "pass123", password_confirmation: "pass123")
+    end
+
+    it "Authenticates with correct name and password" do
+      expect(User.authenticate_with_credentials("user1", "pass123")).to_not eql(nil)
+    end
+
+    it "Returns nil when given incorrect name" do
+      expect(User.authenticate_with_credentials("user2", "pass123")).to eql(nil)
+    end
+
+    it "Returns nil when given incorrect password" do
+      expect(User.authenticate_with_credentials("user1", "pass123asd")).to eql(nil)
+    end
+  end
 end
