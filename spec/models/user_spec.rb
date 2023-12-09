@@ -43,5 +43,12 @@ RSpec.describe User, type: :model do
       expect {@user.save!}.to raise_error(ActiveRecord::RecordInvalid)
     end
 
+    it "Requires passwords of at least 7 characters" do
+      @user.name = "newUser"
+      @user.password = "pass12"
+      @user.password_confirmation = "pass12"
+      expect {@user.save!}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
   end
 end
